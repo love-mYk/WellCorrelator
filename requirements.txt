@@ -1,0 +1,9 @@
+# WellCorrelator v5.7 依赖
+# 安装: pip install -r requirements.txt
+
+PyQt6>=6.6.0
+pyqtgraph>=0.13.0
+numpy>=1.26.0
+pandas>=2.1.0
+lasio>=0.31.0
+scipy>=1.11.0
