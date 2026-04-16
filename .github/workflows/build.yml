@@ -1,0 +1,24 @@
+name: Build WellCorrelator
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: |
+          pip install nuitka ordered-set zstandard
+          pip install -r requirements.txt
+      - run: |
+          python -m nuitka --standalone --onefile --windows-console-mode=disable --output-dir=dist --output-filename=WellCorrelator.exe --enable-plugin=pyqt6 --include-package=pyqtgraph --include-package=numpy --include-package=pandas --include-package=lasio --include-package=scipy --windows-product-name="WellCorrelator" --windows-product-version=5.7.0.0 --assume-yes-for-downloads v5.7.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: WellCorrelator-Windows
+          path: dist/WellCorrelator.exe
